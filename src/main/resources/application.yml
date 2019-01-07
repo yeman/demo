@@ -1,0 +1,86 @@
+server:
+  port: 9999
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 500
+
+
+spring:
+  application:
+    name: demlo
+  #eureka集群配置
+  #eureka:
+  #    instance:
+  #       hostname: hjzx1
+  #    client:
+  #       register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
+  #       fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
+  #       serviceUrl:
+  #          defaultZone: http://hjzx2:8001/eureka/,http://hjzx3:8002/eureka/
+
+  # Admin Server 中配置的 username 和 password
+  boot:
+    admin:
+      username: root
+      password: root
+      ## 配置Admin Server的地址
+      url: http://localhost:9000
+  data:
+#    solr:
+#      enable: true #启用solr
+#      searchLimit: 100
+#      defaultCollection: collection
+#      zk-host: 172.16.52.3:2181,172.16.52.5:2181,172.16.52.8:2181
+    ##mongodb配置
+     mongodb:
+       uri: mongodb://root:root@10.78.8.136:27017/test?authsource=admin
+# 连接池最大连接数（使用负值表示没有限制）
+  redis:
+    database: 0
+    timeout: 2000s
+    #password:
+    lettuce:
+      maxActive: 8
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      maxWait: -1
+        # 连接池中的最大空闲连接
+      maxIdle: 8
+     # 连接池中的最小空闲连接
+      minIdle: 0
+   # 连接超时时间（毫秒）
+      timeout: 3000
+    commandTimeout: 5000
+   # redis.cluster
+    cluster:
+       nodes: 127.0.0.1:6380,127.0.0.1:6381,127.0.0.1:6382,127.0.0.1:6383,127.0.0.1:6384,127.0.0.1:6385
+
+#security:
+#   basic:
+#      enabled: false # 关闭身份验证
+
+#management:
+#   security:
+#      enabled: false # 关闭安全验证
+
+#eureka单机配置
+#eureka:
+#  client:
+#    register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
+#    fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
+#    serviceUrl:
+#      defaultZone: http://localhost:8001/eureka/
+
+## 该配置节点为独立的节点，这个配置放在spring的节点下，导致配置无法被识别
+mybatis-plus:
+  mapper-locations: classpath*:com/dt/demo/*/mapper/*Mapper.xml
+  typeAliasesPackage: com.dt.demo.*.entity
+  globalConfig:
+    dbConfig:
+      dbType: MYSQL
+      idType: ID_WORKER
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
