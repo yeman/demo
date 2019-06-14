@@ -22,7 +22,8 @@ public class OrderController{
     private StringRedisTemplate redisTemplate;
     @Autowired
     private GoodMongoDaoImpl goodMongoDao;
-    @RequestMapping(value = "/testredis",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/testRedis",method = RequestMethod.GET)
     public void test01(){
         redisTemplate.opsForValue().set("test01","测试");//添加
         long inc =  redisTemplate.opsForValue().increment("sheet.hb");

@@ -4,19 +4,68 @@ server:
     uri-encoding: UTF-8
     max-threads: 500
 
-
 spring:
   application:
-    name: demlo
-  #eureka集群配置
-  #eureka:
-  #    instance:
-  #       hostname: hjzx1
-  #    client:
-  #       register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
-  #       fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
-  #       serviceUrl:
-  #          defaultZone: http://hjzx2:8001/eureka/,http://hjzx3:8002/eureka/
+    name: demo
+
+## spring jdbc 数据源配置
+#  datasource:
+#      url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf8
+#      driverClassName: com.mysql.jdbc.Driver
+#      username: root
+#      password: root
+
+### alibaba druid 数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+        url: jdbc:mysql://localhost:3306/demo?characterEncoding=utf8&useSSL=true&useOldAliasMetadataBehavior=true
+        username: root
+        password: root
+        initial-size: 10
+        max-active: 100
+        min-idle: 10
+        max-wait: 60000
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1 FROM DUAL
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        stat-view-servlet:
+          enabled: true
+          url-pattern: /druid/*
+          #login-username: admin
+          #login-password: admin
+        filter:
+          stat:
+            log-slow-sql: true
+            slow-sql-millis: 1000
+            merge-sql: true
+          wall:
+            config:
+              multi-statement-allow: true
+
+#eureka集群配置
+#eureka:
+#    instance:
+#       hostname: hjzx1
+#    client:
+#       register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
+#       fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
+#       serviceUrl:
+#          defaultZone: http://hjzx2:8001/eureka/,http://hjzx3:8002/eureka/
+
+#eureka单机配置
+#eureka:
+#  client:
+#    register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
+#    fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
+#    serviceUrl:
+#      defaultZone: http://localhost:8001/eureka/
 
   # Admin Server 中配置的 username 和 password
   boot:
@@ -33,7 +82,7 @@ spring:
 #      zk-host: 172.16.52.3:2181,172.16.52.5:2181,172.16.52.8:2181
     ##mongodb配置
      mongodb:
-       uri: mongodb://root:root@10.78.8.136:27017/test?authsource=admin
+       uri: mongodb://demo:demo@127.0.0.1:27017/test?authsource=admin
 # 连接池最大连接数（使用负值表示没有限制）
   redis:
     database: 0
@@ -62,13 +111,6 @@ spring:
 #   security:
 #      enabled: false # 关闭安全验证
 
-#eureka单机配置
-#eureka:
-#  client:
-#    register-with-eureka: false #是否将自己注册到Eureka Server 默认为true
-#    fetch-registry: false  #是否从Eureka Server获取注册信息 默认为true
-#    serviceUrl:
-#      defaultZone: http://localhost:8001/eureka/
 
 ## 该配置节点为独立的节点，这个配置放在spring的节点下，导致配置无法被识别
 mybatis-plus:

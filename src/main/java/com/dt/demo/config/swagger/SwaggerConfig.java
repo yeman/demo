@@ -1,3 +1,4 @@
+/*
 package com.dt.demo.config.swagger;
 
 import org.springframework.context.annotation.Bean;
@@ -11,11 +12,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+*/
 /**
  * @Description "TODO"
  * @Author :ym
  * @Date: 2018/11/26 15:11
- **/
+ **//*
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -42,7 +45,8 @@ public class SwaggerConfig {
                 .build();
     }
 
-    /*@Bean 分组
+    */
+/*@Bean 分组
      public Docket deviceDocket() {
                  return new Docket(DocumentationType.SWAGGER_2)
                          .groupName("用户接口文档")
@@ -50,6 +54,7 @@ public class SwaggerConfig {
                          .paths(PathSelectors.any())
                          .apis(RequestHandlerSelectors.basePackage("com.yjt.basic.user.controller"))
                          .build();
-    }*/
+    }*//*
 
-}
+
+}*/

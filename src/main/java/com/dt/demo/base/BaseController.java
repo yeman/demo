@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dt.demo.util.MapUtils;
 import com.dt.demo.web.ResponseResult;
 import com.dt.demo.web.StatusCode;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiParam;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.*;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description: TODO
+ * Description: 基础控制器
  * Date: 2018-12-06 09:58
  * Author: YM
  **/
@@ -37,7 +37,7 @@ public class BaseController<M extends BaseServiceImpl,T> {
     @Autowired
     private M baseService;
 
-    @ApiOperation(value = "saveOrUpdate",notes = "保存或更新", response = ResponseResult.class)
+  // //@ApiOperation(value = "saveOrUpdate",notes = "保存或更新", response = ResponseResult.class)
     @RequestMapping(value = "/saveOrUpdate",method = RequestMethod.POST)
     public ResponseResult saveOrUpdate(@RequestBody T t) throws IllegalAccessException, InstantiationException {
         ResponseResult responseResult = new ResponseResult();
@@ -65,12 +65,13 @@ public class BaseController<M extends BaseServiceImpl,T> {
             ConvertUtils.register(new SqlDateConverter(null), java.util.Date.class);
             ConvertUtils.register(new SqlTimestampConverter(null),java.sql.Timestamp.class);
 
-            BeanUtils.copyProperties(entity,t);
             if(id!=null){//id exits update
                 updateUser(t);
             }else{
                 createUser(t);
             }
+            BeanUtils.copyProperties(entity,t);
+
             this.baseService.saveOrUpdate(entity);
             responseResult.setData(t);
         } catch (NoSuchMethodException e) {
@@ -91,8 +92,8 @@ public class BaseController<M extends BaseServiceImpl,T> {
     private void updateUser(T t) {
     }
 
-    @ApiOperation(value = "delete/{id}",notes = "删除", response = ResponseResult.class)
-    @RequestMapping(value = "/saveOrUpdate",method = RequestMethod.GET)
+   //@ApiOperation(value = "delete/{id}",notes = "删除", response = ResponseResult.class)
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
     public ResponseResult delete(@PathVariable Serializable id) {
         ResponseResult responseResult = new ResponseResult();
         try {
@@ -104,7 +105,8 @@ public class BaseController<M extends BaseServiceImpl,T> {
         }
         return responseResult;
     }
-    @ApiOperation(value = "batchDelete",notes = "批量删除", response = ResponseResult.class)
+
+   ////@ApiOperation(value = "batchDelete",notes = "批量删除", response = ResponseResult.class)
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST)
     public ResponseResult batchDelete(@RequestBody List ids) {
         ResponseResult responseResult = new ResponseResult();
@@ -122,6 +124,7 @@ public class BaseController<M extends BaseServiceImpl,T> {
         }
         return responseResult;
     }
+
     @RequestMapping(value = "/showPageList" ,method = RequestMethod.POST)
     public ResponseResult showPageList(@RequestParam Map param){
         logger.info("current:"+ MapUtils.getLong(param,"current"));
@@ -148,9 +151,9 @@ public class BaseController<M extends BaseServiceImpl,T> {
         return simpleResult;
     }
 
-    @ApiOperation(value = "根据ID查找", notes = "根据ID查找", response = ResponseResult.class)
+   //@ApiOperation(value = "根据ID查找", notes = "根据ID查找", response = ResponseResult.class)
     @RequestMapping(value = "/get/{id}" ,method = RequestMethod.GET)
-    public ResponseResult get(@PathVariable @ApiParam(name ="id",required = true) Serializable id){
+    public ResponseResult get(@PathVariable  Serializable id){
         ResponseResult simpleResult = new ResponseResult();
         try {
             Object obj = this.baseService.getById(id);
